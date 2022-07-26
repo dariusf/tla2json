@@ -1,0 +1,26 @@
+name: Release
+on:
+  push:
+    # branches:
+    #   - master
+    tags:
+      - "v*.*.*"
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Setup JDK
+      uses: actions/setup-java@v3
+      with:
+        distribution: temurin
+        java-version: 18
+    - name: Build
+      run: sbt assembly
+    - name: Upload
+      uses: softprops/action-gh-release@v1
+      with:
+          files: target/scala-2.13/tla2json.jar
