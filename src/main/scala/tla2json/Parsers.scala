@@ -104,6 +104,8 @@ object Parsers {
 
     val preSteps = "(?s)^(.*?\n)?(?=State 1:)".r
 
+    val initialPreSteps = "(?s)^(.*?\n)?[^\n]+(?:violated by the initial state:)\n".r
+
     def isTraceFromToolboxErrorConsole(s: String): Boolean =
       "\\b_TEAction\\b".r.pattern.matcher(s).find
 
@@ -136,6 +138,9 @@ object Parsers {
 
     def steps[_: P]: P[Steps[String]] =
       P(step.rep(sep = stepSep)).map(ss => tla2json.Steps(ss.to(ArraySeq)))
+
+    def initialStateViolation[_: P]: P[Steps[String]] =
+      P(state.map(s => tla2json.Steps(List(Step(1, Desc("Initial state"), s)).to(ArraySeq))))
 
     def traceFromTlcOutput[_: P]: P[Steps[String]] =
       P(steps) // Deliberately not adding ` ~ End` here because we want to ignore the tail.

@@ -163,5 +163,10 @@ object StepsTest extends TestSuite {
       assertEq(pc, Some("""{"p1":"main3"}"""))
     }
 
+    "td6_desc" - {
+      val step = TestData6.fullTraceJson.no(1)
+      val pc = step.state.variables.get("x").map(_.noSpaces)
+      assertEq(pc, Some("""0"""))
+    }
   }
 }

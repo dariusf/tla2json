@@ -91,7 +91,10 @@ object Steps {
       Left(fastparse.parse(content, traceFromToolboxErrorConsole(_)).get.value)
     else if (content.contains("Model checking completed. No error has been found."))
       Left(apply(ArraySeq.empty))
-    else {
+    else if (content.contains("violated by the initial state:")) {
+      content = initialPreSteps.replaceFirstIn(content, "")
+      Right(fastparse.parse(content, initialStateViolation(_)).get.value)
+    } else {
       content = preSteps.replaceFirstIn(content, "")
       Right(fastparse.parse(content, traceFromTlcOutput(_)).get.value)
     }
