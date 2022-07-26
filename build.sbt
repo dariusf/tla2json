@@ -1,7 +1,7 @@
 ThisBuild / homepage     := Some(url("https://github.com/japgolly/tla2json"))
 ThisBuild / licenses     := Seq("Apache-2.0" -> url("http://opensource.org/licenses/Apache-2.0"))
 ThisBuild / organization := "com.github.japgolly.tla2json"
-ThisBuild / scalaVersion := "2.13.5"
+ThisBuild / scalaVersion := "2.13.8"
 ThisBuild / startYear    := Some(2020)
 
 val defaultScalacOptions = Seq(
