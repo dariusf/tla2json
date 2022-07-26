@@ -31,7 +31,7 @@ object JsonTest extends TestSuite {
     "b1" - {
       assertValueToJson(
         "(ls :> [isEmpty |-> FALSE, get |-> {}])",
-        """{"ls": {"isEmpty": false, "get": []}}"""
+        """{"ls": {"isEmpty": false, "get": {"content": [], "type": "set"}}}"""
       )
     }
 
@@ -40,7 +40,7 @@ object JsonTest extends TestSuite {
         |  "browsers":{"b1":[]},
         |  "network":[],
         |  "tabs":{"t2":{"status":"-"},"t1":{"status":"-"}},
-        |  "remote":[],
+        |  "remote":{"type": "set", "content": []},
         |  "workers":{"w2":{"status":"-"},"w1":{"status":"-"}}
         |}
         |""".stripMargin
@@ -49,19 +49,19 @@ object JsonTest extends TestSuite {
     "td1_41" - spotCheckTestData(TestData1, 41)(
       """{
         |  "network":[
-        |    {"drafts":[{"worker":"w1","time":1,"prov":{"w2":1,"w1":0}},{"worker":"w2","time":1,"prov":{"w2":0,"w1":0}}],"type":"sync:R->T","from":"Remote","to":"t1"},
+        |    {"drafts": {"type": "set", "content": [{"worker":"w1","time":1,"prov":{"w2":1,"w1":0}},{"worker":"w2","time":1,"prov":{"w2":0,"w1":0}}]}, "type":"sync:R->T","from":"Remote","to":"t1"},
         |    {"type":"ack:T->W","from":"t2","to":"w1","id":2}
         |  ],
         |  "workers":{
         |    "w2":{
-        |      "drafts":[{"worker":"w1","time":1,"prov":{"w2":0,"w1":0}},{"worker":"w2","time":1,"prov":{"w2":0,"w1":0}}],
+        |      "drafts":{"type": "set", "content": [{"worker":"w1","time":1,"prov":{"w2":0,"w1":0}},{"worker":"w2","time":1,"prov":{"w2":0,"w1":0}}] },
         |      "time":2,
         |      "status":"live",
         |      "browser":"b1",
         |      "sync":{"Remote":{"desired":2,"lastReq":2,"lastAck":2}}
         |    },
         |    "w1":{
-        |      "drafts":[{"worker":"w1","time":1,"prov":{"w2":1,"w1":0}}],
+        |      "drafts":{"type": "set", "content": [{"worker":"w1","time":1,"prov":{"w2":1,"w1":0}}]},
         |      "time":2,
         |      "status":"live",
         |      "browser":"b1",
@@ -74,10 +74,10 @@ object JsonTest extends TestSuite {
 
     "td3_1" - spotCheckTestData(TestData3, 1)(
       """{
-         |  "browsers":{"b1":{"ls":{"isEmpty": false, "get": []}}, "b2":{"ls":{"isEmpty": false, "get": []}}},
+         |  "browsers":{"b1":{"ls":{"isEmpty": false, "get": {"content": [], "type": "set"}}}, "b2":{"ls":{"isEmpty": false, "get": {"content": [], "type": "set"}}}},
          |  "network":[],
          |  "tabs":{"t2":{"status":"-"},"t1":{"status":"-"}},
-         |  "remote":[],
+         |  "remote":{"content": [], "type": "set"},
          |  "workers":{"w2":{"status":"-"},"w1":{"status":"-"}}
          |}
         |""".stripMargin

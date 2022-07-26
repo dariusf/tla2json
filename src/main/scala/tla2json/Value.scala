@@ -30,7 +30,9 @@ sealed abstract class Value(final val descType: String) {
       case Str(v)        => Json.fromString(v)
       case ModelValue(v) => Json.fromString(v)
       case Seq(vs)       => Json.arr(vs.map(_.toJson): _*)
-      case Set(vs)       => Json.arr(vs.map(_.toJson): _*)
+      case Set(vs)       => Json.obj(
+        ("type", Json.fromString("set")),
+        ("content", Json.arr(vs.map(_.toJson): _*)))
       case Rec(kvs)      => Json.obj(kvs.map(_.map2(_.toJson)): _*)
       case x: @@ =>
         x.toRecord match {
