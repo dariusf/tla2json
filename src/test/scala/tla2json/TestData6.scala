@@ -1,9 +1,5 @@
 package tla2json
 
-object TestData6Test extends TestData.PropTest {
-  override val testData = TestData6
-}
-
 object TestData6 extends TestData {
 
   val output =

@@ -140,7 +140,7 @@ object Parsers {
       P(step.rep(sep = stepSep)).map(ss => tla2json.Steps(ss.to(ArraySeq)))
 
     def initialStateViolation[_: P]: P[Steps[String]] =
-      P(state.map(s => tla2json.Steps(List(Step(1, Desc("Initial state"), s)).to(ArraySeq))))
+      P(state.map(s => tla2json.Steps(List(Step(1, Step.Desc.Initial, s)).to(ArraySeq))))
 
     def traceFromTlcOutput[_: P]: P[Steps[String]] =
       P(steps) // Deliberately not adding ` ~ End` here because we want to ignore the tail.
